@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://udp_client.gd" type="Script" id=1]
+[ext_resource path="res://face_mesh_renderer.gd" type="Script" id=2]
+
+[node name="Main" type="Spatial"]
+
+[node name="UDPClient" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="FaceMeshRenderer" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+
+[connection signal="face_mesh_received" from="UDPClient" to="FaceMeshRenderer" method="_on_UDPClient_face_mesh_received"]
+[connection signal="face_mesh_received" from="UDPClient" to="FaceMeshRenderer" method="_on_UPDClient_face_mesh_received"]

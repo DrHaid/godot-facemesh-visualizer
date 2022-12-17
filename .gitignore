@@ -7,3 +7,10 @@ export_presets.cfg
 # Mono-specific ignores
 .mono/
 data_*/
+
+# Python files
+python/__pycache__/
+python/.venv/
+
+# mock webcam test file 
+python/webcam.mp4
