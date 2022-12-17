@@ -27,7 +27,7 @@ def main():
 
 		results = face_mesh_capture.get_face_mesh(image=image)
 
-		data = str.encode(convert_landmarks(results))
+		data = convert_landmarks(results)
 		socket_connection.sendto(data, SOCKET_ADDRESS)
 
 		if args.preview:

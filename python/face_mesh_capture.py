@@ -1,5 +1,6 @@
 from typing import NamedTuple
 
+import struct
 import cv2
 import numpy as np
 import mediapipe as mp
@@ -45,7 +46,13 @@ class FaceMeshCapture():
 			connection_drawing_spec=MP_DRAWING_STYLES.get_default_face_mesh_iris_connections_style())
 		return image
 
-def convert_landmarks(face_mesh: NamedTuple) -> str:
+def convert_landmarks(face_mesh: NamedTuple) -> list:
+	result = [len(face_mesh.landmark)]
+	for i, point in enumerate(face_mesh.landmark):
+		result.extend((point.x, point.y, point.z))
+	return struct.pack('%sf' % len(result), *result)
+
+def stringify_landmarks(face_mesh: NamedTuple) -> str:
 	result_str = ""
 	for i, point in enumerate(face_mesh.landmark):
 		result_str += f"{i};{point.x};{point.y};{point.z}\n"

@@ -11,12 +11,21 @@ func _ready():
 func _process(_delta):
 	if socketUDP.get_available_packet_count() > 0:
 		var points: PoolVector3Array = []
-		var msg_raw = socketUDP.get_packet().get_string_from_utf8()
-		var arr = msg_raw.split("\n")
-		for msg in arr:
-			var parts = msg.split(";")
-			if parts.size() == 4:
-				points.append(Vector3(parts[1], float(parts[2]) * -1, parts[3]))
+		var stream = StreamPeerBuffer.new()
+		stream.data_array = socketUDP.get_packet()
+		var batch_size = stream.get_float()
+		for i in range(batch_size):
+			var x = stream.get_float()
+			var y = stream.get_float()
+			var z = stream.get_float()
+			points.append(Vector3(x, y, z))
+		
+#		var msg_raw = socketUDP.get_packet().get_string_from_utf8()
+#		var arr = msg_raw.split("\n")
+#		for msg in arr:
+#			var parts = msg.split(";")
+#			if parts.size() == 4:
+#				points.append(Vector3(parts[1], float(parts[2]) * -1, parts[3]))
 		emit_signal("face_mesh_received", points)
 
 func _exit_tree():
