@@ -12,5 +12,6 @@ script = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.496771, 0.474511, 0.811219 )
 
 [connection signal="face_mesh_received" from="UDPClient" to="FaceMeshRenderer" method="_on_UDPClient_face_mesh_received"]
