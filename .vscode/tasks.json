@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create Python Pipenv",
+            "type": "shell",
+            "command": "cd ${workspaceFolder}/python && PIPENV_VENV_IN_PROJECT=1 pipenv install",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

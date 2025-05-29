@@ -1,17 +1,34 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://cd8mxcp0wauo6"]
 
-[ext_resource path="res://udp_client.gd" type="Script" id=1]
-[ext_resource path="res://face_mesh_renderer.gd" type="Script" id=2]
+[ext_resource type="Script" uid="uid://c70gicjt5gkjw" path="res://udp_client.gd" id="1"]
+[ext_resource type="Script" uid="uid://cvw2ladw147kl" path="res://face_mesh_renderer.gd" id="2"]
+[ext_resource type="Shader" uid="uid://dy7s1fhtqucun" path="res://wireframe.gdshader" id="3_1bvp3"]
+[ext_resource type="ArrayMesh" uid="uid://c63hrxqsf76jw" path="res://face_mesh.tres" id="4_lquwl"]
 
-[node name="Main" type="Spatial"]
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
+render_priority = 0
+shader = ExtResource("3_1bvp3")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 0.0
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
 
 [node name="UDPClient" type="Node" parent="."]
-script = ExtResource( 1 )
+unique_name_in_owner = true
+script = ExtResource("1")
 
 [node name="FaceMeshRenderer" type="Node" parent="."]
-script = ExtResource( 2 )
+script = ExtResource("2")
 
-[node name="Camera" type="Camera" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FaceMeshRenderer"]
+mesh = ExtResource("4_lquwl")
+surface_material_override/0 = SubResource("ShaderMaterial_1bvp3")
 
-[connection signal="face_mesh_received" from="UDPClient" to="FaceMeshRenderer" method="_on_UDPClient_face_mesh_received"]
-[connection signal="face_mesh_received" from="UDPClient" to="FaceMeshRenderer" method="_on_UPDClient_face_mesh_received"]
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.601899, -0.558153, -0.733835)
